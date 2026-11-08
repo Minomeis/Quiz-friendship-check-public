@@ -1,0 +1,177 @@
+/* 样式：手机优先（竖屏），电脑端居中窄栏；只用系统字体，不引用任何外站资源 */
+:root {
+  --bg: #fdf6ee;
+  --card: #ffffff;
+  --text: #4a3b32;
+  --muted: #7a685c;
+  --line: #ecdccb;
+  --accent: #b85a34;
+  --accent-soft: #fbe6d6;
+  --track: #f1e3d3;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-tap-highlight-color: transparent;
+  overflow-wrap: anywhere;
+}
+
+[hidden] { display: none !important; }
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+h1, h2, h3, h4, p, ul { margin: 0; }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { background: transparent; color: var(--accent); }
+.btn:focus-visible, .option:focus-visible, .tip summary:focus-visible { outline: 3px solid #e9a77f; outline-offset: 2px; }
+
+/* ---------- 开始页 ---------- */
+.start-title { font-size: 24px; line-height: 1.4; margin-top: 8px; }
+.start-subtitle { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.intro { margin: 20px 0 24px; }
+.intro p { margin-top: 12px; }
+.intro p:first-child { margin-top: 0; font-weight: 600; font-size: 18px; }
+.disclaimer { margin-top: 24px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+/* ---------- 答题页 ---------- */
+.quiz-top { display: flex; align-items: center; gap: 12px; }
+.quiz-count { flex: none; font-size: 15px; font-weight: 600; color: var(--accent); }
+.progress { flex: 1; height: 8px; background: var(--track); border-radius: 4px; overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width .2s; }
+.quiz-text { font-size: 20px; line-height: 1.6; font-weight: 600; margin: 28px 0 24px; min-height: 96px; }
+.options { display: grid; gap: 12px; }
+.option {
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 16px;
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 17px;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.option.selected { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+#btn-prev { margin-top: 20px; }
+
+/* ---------- 结果页：卡片 ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(120, 80, 40, .08);
+}
+.card-kicker { font-size: 13px; color: var(--muted); }
+.card-type { font-size: 24px; line-height: 1.35; color: var(--accent); }
+.card-total { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 4px; margin-top: 4px; }
+.card-num { font-size: 40px; font-weight: 700; line-height: 1.2; }
+.card-max { font-size: 16px; color: var(--muted); }
+.card-level { margin-left: 8px; padding: 2px 10px; background: var(--accent-soft); border-radius: 12px; font-size: 14px; font-weight: 600; }
+.bars { list-style: none; padding: 0; margin-top: 12px; }
+.bars li { display: flex; align-items: center; gap: 8px; min-height: 30px; font-size: 14px; }
+.bar-name { flex: none; width: 7.6em; }
+.bar-track { flex: 1; height: 10px; background: var(--track); border-radius: 5px; overflow: hidden; }
+.bar-track i { display: block; height: 100%; background: var(--accent); border-radius: 5px; }
+.bar-val { flex: none; width: 3.6em; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.save-note { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--muted); text-align: center; }
+
+/* ---------- 结果页：提示与说明 ---------- */
+.hints { margin-top: 20px; padding: 12px 16px; background: var(--accent-soft); border-radius: 12px; }
+.hints p + p { margin-top: 8px; }
+.level-box { margin-top: 20px; }
+.level-box h3 { font-size: 18px; margin-bottom: 6px; }
+.level-box p + p { margin-top: 8px; }
+.mild-note { margin-top: 16px; padding: 10px 14px; border-left: 4px solid var(--accent); background: var(--card); color: var(--muted); font-size: 15px; }
+
+/* ---------- 结果页：报告 ---------- */
+.report { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+.report h1 { font-size: 22px; line-height: 1.4; margin-bottom: 12px; }
+.report h4 { font-size: 18px; line-height: 1.5; margin: 24px 0 8px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.report-extra h4:first-child { margin-top: 0; }
+.report p { margin-top: 10px; }
+.report ul { margin-top: 10px; padding-left: 22px; }
+.report li { margin-top: 6px; }
+
+/* 建议：小标题可点，详细文字默认折叠 */
+.tips { margin-top: 10px; }
+.tip { border: 1px solid var(--line); border-radius: 12px; background: var(--card); margin-top: 10px; }
+.tip summary {
+  position: relative;
+  min-height: 48px;
+  padding: 10px 40px 10px 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  list-style: none;
+  touch-action: manipulation;
+}
+.tip summary::-webkit-details-marker { display: none; }
+.tip summary::after {
+  content: "+";
+  position: absolute;
+  right: 14px;
+  top: 8px;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--accent);
+}
+.tip[open] summary::after { content: "−"; }
+.tip-body { padding: 0 14px 12px; }
+.tip-body p:first-child { margin-top: 0; }
+
+.result-end { margin-top: 32px; }
+
+/* ---------- 确认层 ---------- */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(60, 40, 25, .5);
+}
+.dialog { width: 100%; max-width: 360px; padding: 20px 16px 16px; background: var(--card); border-radius: 16px; }
+.dialog-text { font-size: 17px; line-height: 1.6; }
+.dialog-btns { display: flex; gap: 12px; margin-top: 20px; }
+.dialog-btns .btn { flex: 1; width: auto; }
+
+/* 电脑端：字号略大一点，仍保持居中窄栏 */
+@media (min-width: 600px) {
+  .page { padding-top: 48px; }
+}

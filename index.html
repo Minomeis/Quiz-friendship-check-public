@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fdf6ee">
+  <title>测测你是不是正在经历一段消耗型友情</title>
+  <!-- 空图标：避免浏览器去请求不存在的 favicon.ico -->
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <!-- 开始页 -->
+    <section id="view-start" class="view" hidden>
+      <h1 id="start-title" class="start-title"></h1>
+      <p id="start-subtitle" class="start-subtitle"></p>
+      <div id="start-intro" class="intro"></div>
+      <button type="button" id="btn-start" class="btn btn-primary">开始测试</button>
+      <p id="start-disclaimer" class="disclaimer"></p>
+    </section>
+
+    <!-- 答题页 -->
+    <section id="view-quiz" class="view" hidden>
+      <div class="quiz-top">
+        <span id="quiz-count" class="quiz-count"></span>
+        <div id="quiz-progress" class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-label="答题进度"><i id="quiz-progress-fill"></i></div>
+      </div>
+      <h2 id="quiz-text" class="quiz-text"></h2>
+      <div id="quiz-options" class="options"></div>
+      <button type="button" id="btn-prev" class="btn btn-ghost" hidden>上一题</button>
+    </section>
+
+    <!-- 结果页：内容由 js/app.js 生成 -->
+    <section id="view-result" class="view" hidden>
+      <div id="result-body"></div>
+      <div class="result-end">
+        <button type="button" id="btn-restart" class="btn btn-primary">重新测试</button>
+        <p id="result-disclaimer" class="disclaimer"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 重新测试的确认层（页面内自绘，不用浏览器自带弹窗） -->
+  <div id="confirm-layer" class="layer" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-text">
+      <p id="confirm-text" class="dialog-text">重新测试会清空本次结果，建议先截图保存。</p>
+      <div class="dialog-btns">
+        <button type="button" id="btn-cancel" class="btn btn-ghost">取消</button>
+        <button type="button" id="btn-confirm" class="btn btn-primary">确认重测</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/markdown.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
