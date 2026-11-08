@@ -198,7 +198,8 @@
           '<span class="bar-track"><i style="width:' + (s / 12 * 100) + '%"></i></span>' +
           '<span class="bar-val">' + s + '/12</span></li>';
       }).join('') + '</ul></div>' +
-      '<p class="save-note">结果只保存在当前浏览器，换手机或清除浏览记录就会消失，建议截图保存。</p>';
+      '<p class="save-note">点「保存结果」生成长图，保存到相册</p>' +
+      '<button type="button" id="btn-save-card" class="btn btn-ghost">保存结果</button>';
 
     // b. 提示句
     if (r.hints.length) {
@@ -223,6 +224,50 @@
     });
 
     $('result-body').innerHTML = html;
+    $('btn-save-card').addEventListener('click', openSave);
+  }
+
+  var generating = false;
+  var imageUrls = [];
+  var imageVersion = '';
+  function openSave() { if (!generating) { $('save-layer').hidden = false; $('save-short').focus(); } }
+  function closeSave() { if (!generating) $('save-layer').hidden = true; }
+  function closePreview() { $('preview-layer').hidden = true; $('preview-images').innerHTML = ''; imageUrls = []; }
+  async function generateShare(version) {
+    if (generating) return;
+    generating = true;
+    ['save-short', 'save-full', 'save-cancel'].forEach(function (id) { $(id).disabled = true; });
+    $('save-status').textContent = '正在生成…';
+    $('save-status').hidden = false;
+    try {
+      await new Promise(function (resolve) { setTimeout(resolve, 30); });
+      imageUrls = await ShareImage.generate(judge(state.answers), QUIZ_DATA, version, window.devicePixelRatio || 1);
+      imageVersion = version;
+      $('preview-images').innerHTML = '';
+      imageUrls.forEach(function (url, i) {
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = '结果长图第 ' + (i + 1) + ' 张';
+        $('preview-images').appendChild(img);
+      });
+      $('save-layer').hidden = true;
+      $('preview-layer').hidden = false;
+      $('preview-layer').scrollTop = 0;
+      $('save-status').hidden = true;
+    } catch (e) {
+      $('save-status').textContent = '生成失败，请重试。';
+    } finally {
+      generating = false;
+      ['save-short', 'save-full', 'save-cancel'].forEach(function (id) { $(id).disabled = false; });
+    }
+  }
+  function downloadImages() {
+    imageUrls.forEach(function (url, i) {
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'friendship-check-' + (imageVersion === 'short' ? '简版' : '完整版') + '-' + (i + 1) + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    });
   }
 
   // ---------- 重新测试 ----------
@@ -249,6 +294,12 @@
   function init() {
     renderStart();
     $('btn-start').addEventListener('click', startQuiz);
+    $('btn-save-bottom').addEventListener('click', openSave);
+    $('save-cancel').addEventListener('click', closeSave);
+    $('save-short').addEventListener('click', function () { generateShare('short'); });
+    $('save-full').addEventListener('click', function () { generateShare('full'); });
+    $('preview-close').addEventListener('click', closePreview);
+    $('download-images').addEventListener('click', downloadImages);
     $('btn-prev').addEventListener('click', goPrev);
     $('btn-restart').addEventListener('click', openConfirm);
     $('btn-cancel').addEventListener('click', closeConfirm);

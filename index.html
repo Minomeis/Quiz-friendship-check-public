@@ -35,6 +35,7 @@
     <section id="view-result" class="view" hidden>
       <div id="result-body"></div>
       <div class="result-end">
+        <button type="button" id="btn-save-bottom" class="btn btn-ghost">保存结果</button>
         <button type="button" id="btn-restart" class="btn btn-primary">重新测试</button>
         <p id="result-disclaimer" class="disclaimer"></p>
       </div>
@@ -52,9 +53,26 @@
     </div>
   </div>
 
+  <div id="save-layer" class="layer" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="save-title">
+      <p id="save-title" class="dialog-text">选择长图版本</p>
+      <div class="save-choices">
+        <button type="button" id="save-short" class="btn btn-primary">简版长图</button>
+        <button type="button" id="save-full" class="btn btn-primary">完整长图</button>
+        <button type="button" id="save-cancel" class="btn btn-ghost">取消</button>
+      </div>
+      <p id="save-status" role="status" hidden></p>
+    </div>
+  </div>
+  <div id="preview-layer" class="preview-layer" role="dialog" aria-modal="true" aria-label="长图预览" hidden>
+    <div class="preview-toolbar"><p>长按图片保存到相册</p><div><button type="button" id="download-images" class="btn btn-primary">下载图片</button><button type="button" id="preview-close" class="btn btn-ghost">关闭</button></div></div>
+    <div id="preview-images" class="preview-images"></div>
+  </div>
+
   <script src="js/data.js"></script>
   <script src="js/markdown.js"></script>
   <script src="js/scoring.js"></script>
+  <script src="js/share-image.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
