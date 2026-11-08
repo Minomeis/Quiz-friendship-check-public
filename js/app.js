@@ -199,7 +199,8 @@
           '<span class="bar-val">' + s + '/12</span></li>';
       }).join('') + '</ul></div>' +
       '<p class="save-note">点「保存结果」生成长图，保存到相册</p>' +
-      '<button type="button" id="btn-save-card" class="btn btn-ghost">保存结果</button>';
+      '<div class="result-actions"><button type="button" id="btn-save-card" class="btn btn-ghost">保存结果</button>' +
+      '<button type="button" id="btn-ai-card" class="btn btn-ghost">复制给 AI，聊聊我的结果</button></div>';
 
     // b. 提示句
     if (r.hints.length) {
@@ -225,6 +226,35 @@
 
     $('result-body').innerHTML = html;
     $('btn-save-card').addEventListener('click', openSave);
+    $('btn-ai-card').addEventListener('click', copyAiText);
+  }
+
+  var copying = false;
+  var noticeTimer;
+  function closeCopyNotice() {
+    clearTimeout(noticeTimer);
+    $('copy-notice').hidden = true;
+  }
+  function closeCopyLayer() {
+    $('copy-layer').hidden = true;
+    $('copy-text').value = '';
+  }
+  async function copyAiText() {
+    if (copying || state.stage !== 'result' || !$('copy-layer').hidden) return;
+    copying = true;
+    var text = buildAiText(judge(state.answers), state.answers, QUIZ_DATA);
+    closeCopyNotice();
+    try {
+      await navigator.clipboard.writeText(text);
+      $('copy-notice').hidden = false;
+      noticeTimer = setTimeout(closeCopyNotice, 5000);
+    } catch (e) {
+      $('copy-text').value = text;
+      $('copy-layer').hidden = false;
+      $('copy-text').focus();
+    } finally {
+      copying = false;
+    }
   }
 
   var generating = false;
@@ -283,6 +313,8 @@
 
   function restart() {
     $('confirm-layer').hidden = true;
+    closeCopyNotice();
+    closeCopyLayer();
     state = { stage: 'start', answers: [], index: 0 };
     locked = false;
     clearState();
@@ -295,6 +327,9 @@
     renderStart();
     $('btn-start').addEventListener('click', startQuiz);
     $('btn-save-bottom').addEventListener('click', openSave);
+    $('btn-ai-bottom').addEventListener('click', copyAiText);
+    $('copy-notice-close').addEventListener('click', closeCopyNotice);
+    $('copy-close').addEventListener('click', closeCopyLayer);
     $('save-cancel').addEventListener('click', closeSave);
     $('save-short').addEventListener('click', function () { generateShare('short'); });
     $('save-full').addEventListener('click', function () { generateShare('full'); });

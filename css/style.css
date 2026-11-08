@@ -154,8 +154,15 @@ h1, h2, h3, h4, p, ul { margin: 0; }
 .tip-body p:first-child { margin-top: 0; }
 
 .result-end { margin-top: 32px; }
-#btn-save-card { margin-top: 10px; }
+.result-actions { display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 10px; }
+.result-actions .btn { padding-left: 8px; padding-right: 8px; font-size: 14px; }
 #btn-save-bottom { margin-bottom: 12px; }
+#btn-ai-bottom { margin-bottom: 12px; }
+.copy-notice { position: fixed; z-index: 30; left: 16px; right: 16px; bottom: 16px; max-width: 528px; margin: auto; padding: 12px; display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 2px 10px rgba(60,40,25,.2); }
+.copy-notice span { flex: 1; min-width: 0; }
+.copy-notice .btn { flex: none; width: auto; }
+.copy-dialog { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }
+.copy-dialog textarea { width: 100%; min-height: 120px; height: 45vh; margin: 12px 0; padding: 10px; resize: vertical; font: inherit; color: var(--text); border: 1px solid var(--line); border-radius: 8px; overflow: auto; }
 .save-choices { display: grid; gap: 10px; margin-top: 16px; }
 #save-status { margin-top: 12px; text-align: center; }
 .preview-layer { position: fixed; inset: 0; z-index: 20; overflow-y: auto; background: var(--bg); }
