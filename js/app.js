@@ -188,15 +188,15 @@
 
     // a. 结果卡片（尽量一屏放下，方便截图）
     html += '<div class="card">' +
-      '<p class="card-kicker">你的友情类型</p>' +
+      '<div class="card-heading"><div class="card-heading-text"><p class="card-kicker">你的友情类型</p>' +
       '<h2 class="card-type">' + escapeHtml(r.mainReport.name) + '</h2>' +
-      '<p class="card-total"><span class="card-num">' + r.total + '</span><span class="card-max">/60</span>' +
-      '<span class="card-level">' + escapeHtml(r.level.name) + '</span></p>' +
+      '<span class="card-level">' + escapeHtml(r.level.name) + '</span></div>' +
+      '<p class="card-total"><span class="card-num">' + r.total + '</span><span class="card-max">/60</span></p></div>' +
       '<ul class="bars">' + QUIZ_DATA.dimensions.map(function (d) {
         var s = r.scores[d.key];
         return '<li><span class="bar-name">' + escapeHtml(d.name) + '</span>' +
-          '<span class="bar-track"><i style="width:' + (s / 12 * 100) + '%"></i></span>' +
-          '<span class="bar-val">' + s + '/12</span></li>';
+          '<span class="bar-val">' + s + '/12</span>' +
+          '<span class="bar-track"><i style="width:' + (s / 12 * 100) + '%"></i></span></li>';
       }).join('') + '</ul></div>' +
       '<p class="save-note">点「保存结果」生成长图，保存到相册</p>' +
       '<div class="result-actions"><button type="button" id="btn-save-card" class="btn btn-ghost">保存结果</button>' +
